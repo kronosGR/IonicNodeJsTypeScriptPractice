@@ -1,0 +1,7 @@
+{
+  "name": "FoodCloneApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
