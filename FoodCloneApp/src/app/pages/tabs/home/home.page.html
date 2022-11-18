@@ -8,5 +8,19 @@
 </ion-header>
 
 <ion-content>
-  <
+  <swiper [config]="config" >
+    <ng-template swiperSlide>
+      <div [ngStyle]="{'background-image':'url(assets/imgs/1.jpg)'}">
+
+      </div>
+    </ng-template>
+    <ng-template swiperSlide>
+      <div [ngStyle]="{'background-image':'url(assets/imgs/2.jpg)'}">
+
+      </div></ng-template>
+    <ng-template swiperSlide>
+      <div [ngStyle]="{'background-image':'url(assets/imgs/3.jpg)'}">
+
+      </div></ng-template>
+  </swiper>
 </ion-content>

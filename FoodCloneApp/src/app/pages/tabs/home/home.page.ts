@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import SwiperCore, {Keyboard, Pagination, Scrollbar, SwiperOptions} from "swiper";
+
+SwiperCore.use([Pagination, Keyboard])
 
 @Component({
   selector: 'app-home',
@@ -6,10 +9,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  config: SwiperOptions = {
+    slidesPerView: 1.1,
+    pagination: {clickable: true},
+    keyboard: {enabled: true}
 
-  constructor() { }
+  }
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
+
 
 }
