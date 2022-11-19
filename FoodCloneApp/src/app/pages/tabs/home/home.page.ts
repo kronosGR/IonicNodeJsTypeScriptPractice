@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import SwiperCore, {Keyboard, Pagination, Scrollbar, SwiperOptions} from "swiper";
 
-SwiperCore.use([Pagination, Keyboard])
 
 @Component({
   selector: 'app-home',
@@ -9,17 +8,18 @@ SwiperCore.use([Pagination, Keyboard])
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  config: SwiperOptions = {
-    slidesPerView: 1.1,
-    pagination: {clickable: true},
-    keyboard: {enabled: true}
+  banners: any[] = [];
 
-  }
 
   constructor() {
   }
 
   ngOnInit() {
+    this.banners = [
+      {banner: 'assets/imgs/1.jpg'},
+      {banner: 'assets/imgs/2.jpg'},
+      {banner: 'assets/imgs/3.jpg'},
+    ]
   }
 
 

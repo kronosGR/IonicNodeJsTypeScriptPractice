@@ -30,13 +30,35 @@
 //@import 'swiper/scss';
 //@import 'swiper/scss/pagination';
 
-.swiper-pagination-bullet{
+.swiper-pagination-bullet {
   background-color: var(--ion-color-medium);
 }
 
-.swiper-pagination-bullet-active{
+.swiper-pagination-bullet-active {
   background-color: var(--ion-color-primary);
 }
+
+ion-label, h4 {
+  font-weight: bold !important;
+  font-size: 0.9rem;
+}
+
+ion-note, p{
+  font-size: 0.8rem;
+}
+
+h5{
+  font-size: 0.85rem;
+}
+
+h6{
+  font-size: 0.82rem;
+}
+
+.borderBottom{
+  border-bottom: 1-.5vh solid  var(--ion-color-light);
+}
+
 
 ion-title {
   font-weight: bold;

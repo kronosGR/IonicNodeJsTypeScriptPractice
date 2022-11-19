@@ -1,25 +1,14 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>
+  <ion-toolbar mode="md">
+    <ion-title color="dark">
       <span>Home</span>
-      <ion-icon name="chevron-down-outline"></ion-icon>
+      <ion-icon color="dark" name="chevron-down-outline"></ion-icon>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <swiper [config]="config" class="borderBottom">
-    <ng-template swiperSlide>
-      <div [ngStyle]="{'background-image':'url(assets/imgs/1.jpg)'}">
-      </div>
-    </ng-template>
-    <ng-template swiperSlide>
-      <div [ngStyle]="{'background-image':'url(assets/imgs/2.jpg)'}">
-      </div></ng-template>
-    <ng-template swiperSlide>
-      <div [ngStyle]="{'background-image':'url(assets/imgs/3.jpg)'}">
-      </div></ng-template>
-  </swiper>
+  <app-banner [bannerImages]="banners"></app-banner>
 
   <ion-list>
     <ion-list-header class="ion-margin-bottom">
@@ -28,26 +17,6 @@
         <p>Discover unique tastes near you</p>
       </ion-label>
     </ion-list-header>
-    <ion-item lines="none">
-      <ion-thumbnail slot="start">
-        <img src="assets/imgs/1.jpg"/>
-      </ion-thumbnail>
-      <ion-label>
-        <h4>Stayfit</h4>
-        <ion-text color="medium">
-          <p class="pStyle">Italian, Indian, Mexican</p>
-        </ion-text>
-        <span>
-            <ion-icon name="star"></ion-icon>
-            5 .
-          </span>
-        25 mins . $10 for two
-        <ion-text color="tertiary">
-          <p class="distance">
-            2.59 kms away
-          </p>
-        </ion-text>
-      </ion-label>
-    </ion-item>
+    <app-restaurant></app-restaurant>
   </ion-list>
 </ion-content>
