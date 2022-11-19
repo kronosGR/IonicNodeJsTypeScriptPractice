@@ -1,20 +1,20 @@
 <ion-item lines="none">
   <ion-thumbnail slot="start">
-    <img src="assets/imgs/1.jpg"/>
+    <img [src]="restaurant?.cover ? restaurant.cover : 'assets/imgs/1.jpg'"/>
   </ion-thumbnail>
   <ion-label>
-    <h4>Stayfit</h4>
+    <h4>{{restaurant?.name}}</h4>
     <ion-text color="medium">
-      <p class="pStyle">Italian, Indian, Mexican</p>
+      <p class="pStyle">{{getCuisine(restaurant?.cuisines)}}</p>
     </ion-text>
     <span>
-            <ion-icon name="star"></ion-icon>
-            5 .
-          </span>
-    25 mins . $10 for two
-    <ion-text color="tertiary">
+      <ion-icon name="star"></ion-icon>
+      {{restaurant?.rating}}
+    </span>
+    {{restaurant?.delivery_time}} mins . ${{restaurant?.price}} for two
+    <ion-text color="tertiary" *ngIf="restaurant?.distance && restaurant?.distance !== 0">
       <p class="distance">
-        2.59 kms away
+        {{restaurant?.distance | number: '0.0-2'}} kms away
       </p>
     </ion-text>
   </ion-label>
