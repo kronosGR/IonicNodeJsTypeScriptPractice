@@ -8,6 +8,10 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 export class SearchPage implements OnInit {
 
   @ViewChild('searchInput') sInput: any;
+  model: any = {
+    icon: 'search-outline',
+    title: 'No restaurants found'
+  };
   query: any;
   isLoading: boolean = false;
 
@@ -63,10 +67,15 @@ export class SearchPage implements OnInit {
     }, 500);
   }
 
-  onSearchChange(event: any) {
+   onSearchChange(event: any) {
     this.query = event.detail.value.toLowerCase();
+    this.restaurants = [];
     if (this.query.length > 0) {
-      this.restaurants = this.allRestaurants.filter((element: any) => element.short_name.includes(this.query))
+      this.isLoading = true;
+      setTimeout(async() => {
+        this.restaurants = await this.allRestaurants.filter((element: any) => element.short_name.includes(this.query))
+        this.isLoading = false;
+      }, 3000)
     }
   }
 }
