@@ -27,10 +27,11 @@ export class HomePage implements OnInit {
 
       this.restaurants = [
         {
-          uid: '12345',
+          uid: '12wefdss',
           cover: 'assets/imgs/1.jpg',
           name: 'Stayfit',
           short_name: 'stayfit',
+          address: 'Karol Bagh, New Delhi',
           cuisines: [
             'Italian',
             'Mexican'
@@ -41,7 +42,7 @@ export class HomePage implements OnInit {
           price: 100
         },
         {
-          uid: '12335',
+          uid: '12wefdefsdss',
           cover: 'assets/imgs/2.jpg',
           name: 'Stayfit1',
           short_name: 'stayfit1',
@@ -51,11 +52,12 @@ export class HomePage implements OnInit {
           ],
           rating: 5,
           delivery_time: 25,
+          address: 'Karol Bagh, New Delhi',
           distance: 2.5,
           price: 100
         },
         {
-          uid: '123345',
+          uid: '12wefdssrete',
           cover: 'assets/imgs/3.jpg',
           name: 'Stayfit2',
           short_name: 'stayfit2',
@@ -65,10 +67,11 @@ export class HomePage implements OnInit {
           ],
           rating: 5,
           delivery_time: 25,
+          address: 'Karol Bagh, New Delhi',
           distance: 2.5,
           price: 100
         },
-      ]
+      ];
       this.isLoading = false;
     }, 3000);
 

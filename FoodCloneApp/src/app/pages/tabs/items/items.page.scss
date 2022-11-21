@@ -1,0 +1,35 @@
+h1{
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.dashedBorderBottom{
+  border-bottom: 1px dashed var(--ion-color-medium);
+  padding-bottom: 1vh;
+  margin-bottom: 1vh;
+ }
+
+.veg{
+  align-items: center;
+}
+
+ion-thumbnail{
+  height: 10vh;
+  width: 20vw;
+
+  img{
+    border-radius: 5px;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+ion-list-header{
+  font-size: 1rem;
+  font-weight: bold;
+  letter-spacing: 0.7px;
+}
+
+ion-text{
+  font-size: 0.8rem;
+}
