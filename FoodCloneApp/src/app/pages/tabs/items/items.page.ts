@@ -153,6 +153,12 @@ export class ItemsPage implements OnInit {
 
   vegOnly(event: any) {
     console.log(event.detail.checked);
+    this.items = [];
+    if (event.detail.checked === true) {
+      this.items = this.allItems.filter(x => x.veg === true);
+    } else {
+      this.items = this.allItems;
+    }
   }
 
   quantityPlus(item: any, index: number) {
