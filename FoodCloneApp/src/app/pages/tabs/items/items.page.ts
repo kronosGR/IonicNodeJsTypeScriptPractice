@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {NavController} from "@ionic/angular";
+import {Preferences} from "@capacitor/preferences";
 
 @Component({
   selector: 'app-items',
@@ -15,6 +16,7 @@ export class ItemsPage implements OnInit {
   veg: boolean = false;
   items: any = [];
   cartData: any;
+  storedData: any = {};
 
   restaurants = [
     {
@@ -137,14 +139,36 @@ export class ItemsPage implements OnInit {
     })
   }
 
-  getItems() {
+  getCart(){
+    return Preferences.get({
+      key: 'cart'
+    })
+  }
+
+ async getItems() {
     this.data = {};
     this.cartData = {};
+    this.storedData = {};
     let data: any = this.restaurants.filter(x => x.uid === this.id);
     this.data = data[0];
     this.categories = this.categories.filter(x => x.uid === this.id);
     this.items = this.allItems.filter(x => x.uid === this.id);
     console.log(this.data);
+    let cart: any = await this.getCart();
+    if (cart?.value){
+      this.storedData = JSON.parse(cart.value);
+      if (this.id === this.storedData.restaurant.uid && this.allItems.length >0){
+        this.allItems.forEach((element: any) => {
+          this.storedData.items.forEach((ele: any) => {
+            if (element.id !== ele.id) return;
+            element.quantity = ele.quantity;
+          })
+        })
+      }
+      this.cartData.totalItem = this.storedData.totalItem;
+      this.cartData.totalPrice = this.storedData.totalPrice;
+    }
+
   }
 
   getCuisine(cuisines: any) {
@@ -212,11 +236,15 @@ export class ItemsPage implements OnInit {
     this.router.navigate([this.router.url + '/cart'])
   }
 
-  private async saveToCart() {
+  async saveToCart() {
     try {
       this.cartData.restaurant = {};
       this.cartData.restaurant = this.data;
       console.log('cardData', this.cartData);
+      await Preferences.set({
+        key: 'cart',
+        value: JSON.stringify(this.cartData)
+      })
     } catch (e) {
       console.log(e)
     }
