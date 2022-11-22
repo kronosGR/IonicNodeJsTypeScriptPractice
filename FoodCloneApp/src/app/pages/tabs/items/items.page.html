@@ -73,29 +73,31 @@
         <ion-label>
           <h4>{{item?.name}}</h4>
           <p class="ion-text-wrap">{{item?.desc}}</p>
-          <ion-text><p>${{item.price}}</p></ion-text>
+          <ion-text><p>${{item.price | number: '0.2-2'}}</p></ion-text>
         </ion-label>
-<!--        <ion-row>-->
-<!--          <ion-text class="ion-padding-horizontal" color="success">Add</ion-text>-->
-<!--        </ion-row>-->
-        <ion-row>
-          <ion-icon color="success" name="remove-outline"></ion-icon>
-          <ion-text class="ion-text-center quantity" color="success">1</ion-text>
-          <ion-icon color="success" name="add-outline"></ion-icon>
+        <ion-row *ngIf="!item?.quantity || item?.quantity <= 0" (click)="quantityPlus(item, i)">
+          <ion-text class="ion-padding-horizontal" color="success">Add</ion-text>
+        </ion-row>
+        <ion-row *ngIf="item?.quantity > 0">
+          <ion-icon color="success" name="remove-outline"
+                    (click)="quantityMinus(item, i)"></ion-icon>
+          <ion-text class="ion-text-center quantity" color="success">{{item?.quantity}}</ion-text>
+          <ion-icon color="success" name="add-outline" (click)="quantityPlus(item, i)"></ion-icon>
         </ion-row>
       </ion-item>
     </ng-container>
   </ion-list>
 </ion-content>
-<ion-footer>
+<ion-footer *ngIf="cartData?.totalItem >0">
   <ion-toolbar color="success">
     <ion-label color="white">
-      <h4>1 item | $4.00</h4>
+      <h4>{{cartData?.totalItem}} item<span *ngIf="cartData?.totalItem>1">s</span> |
+        ${{cartData?.totalPrice}}</h4>
       <ion-text color="white">
         <p>Extra charge may apply</p>
       </ion-text>
     </ion-label>
-    <ion-button slot="end" fill="clear" color="white">
+    <ion-button slot="end" fill="clear" color="white" (click)="viewCart()">
       <ion-icon slot="end" name="basket-outline"></ion-icon>
       View Cart
     </ion-button>
