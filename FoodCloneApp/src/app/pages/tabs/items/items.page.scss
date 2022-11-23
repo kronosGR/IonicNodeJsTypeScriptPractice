@@ -13,24 +13,6 @@ h1 {
   align-items: center;
 }
 
-ion-item {
-  ion-thumbnail {
-    height: 10vh;
-    width: 20vw;
-
-    img {
-      border-radius: 5px;
-      height: 100%;
-      width: 100%;
-    }
-  }
-
-  ion-row{
-    border: 1px solid var(--ion-color-medium);
-    border-radius: 2px;
-    padding: 0.3rem;
-  }
-}
 
 
 ion-list-header {
@@ -39,17 +21,7 @@ ion-list-header {
   letter-spacing: 0.7px;
 }
 
-.quantity{
-  width: 2rem;
-}
 
-ion-text {
-  font-size: 0.8rem;
-
-  p {
-    margin-top: 0.2rem;
-  }
-}
 
 ion-footer{
   h4,p{

@@ -73,7 +73,7 @@ export class HomePage implements OnInit {
         },
       ];
       this.isLoading = false;
-    }, 3000);
+    }, 1000);
 
 
   }
