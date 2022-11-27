@@ -12,6 +12,7 @@ export class CartPage implements OnInit {
   url: any;
   model: any = {};
   deliveryCharge = 20;
+  instruction: any;
 
   constructor(private router: Router) {
   }
@@ -71,5 +72,25 @@ export class CartPage implements OnInit {
 
   clearCart() {
     Preferences.remove({key: 'cart'});
+  }
+
+  quantityMinus(i: number) {
+
+  }
+
+  quantityPlus(i: number) {
+
+  }
+
+  addAddress() {
+
+  }
+
+  changeAddress() {
+
+  }
+
+  makePayment() {
+    
   }
 }
