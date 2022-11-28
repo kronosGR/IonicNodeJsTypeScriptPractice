@@ -75,11 +75,29 @@ export class CartPage implements OnInit {
   }
 
   quantityMinus(i: number) {
-
+    if(this.model.items[i].quantity !== 0) {
+      this.model.items[i].quantity -= 1; // this.items[index].quantity =
+      // this.items[index].quantity - 1
+    } else {
+      this.model.items[i].quantity = 0;
+    }
+    this.calculate();
   }
 
   quantityPlus(i: number) {
-
+    try {
+      console.log(this.model.items[i]);
+      if(!this.model.items[i].quantity || this.model.items[i].quantity == 0) {
+        this.model.items[i].quantity = 1;
+        this.calculate();
+      } else {
+        this.model.items[i].quantity += 1; // this.items[index].quantity =
+        // this.items[index].quantity + 1
+        this.calculate();
+      }
+    } catch(e) {
+      console.log(e);
+    }
   }
 
   addAddress() {
@@ -91,6 +109,6 @@ export class CartPage implements OnInit {
   }
 
   makePayment() {
-    
+
   }
 }
