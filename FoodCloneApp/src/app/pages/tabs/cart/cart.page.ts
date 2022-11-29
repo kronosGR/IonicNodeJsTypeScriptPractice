@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {Preferences} from "@capacitor/preferences";
+import {IonContent} from "@ionic/angular";
+import * as moment from "moment";
 
 @Component({
   selector: 'app-cart',
@@ -8,18 +10,20 @@ import {Preferences} from "@capacitor/preferences";
   styleUrls: ['./cart.page.scss'],
 })
 export class CartPage implements OnInit {
+  @ViewChild(IonContent, {static: false}) content: any;
   urlCheck: any;
   url: any;
   model: any = {};
   deliveryCharge = 20;
   instruction: any;
+  location: any = {};
 
   constructor(private router: Router) {
   }
 
   ngOnInit() {
     this.checkUrl();
-    this.getCartData();
+    this.getModel();
   }
 
   checkUrl() {
@@ -38,8 +42,11 @@ export class CartPage implements OnInit {
     return Preferences.get({key: 'cart'});
   }
 
-  async getCartData() {
+  async getModel() {
     let data: any = await this.getCard();
+    this.location = {
+      lat: 58.8490393, lng: 5.7480021, address: "Gravarsveien 34, 4306 Sandnes"
+    }
     if (data?.value) {
       this.model = await JSON.parse(data.value);
       this.calculate();
@@ -75,7 +82,7 @@ export class CartPage implements OnInit {
   }
 
   quantityMinus(i: number) {
-    if(this.model.items[i].quantity !== 0) {
+    if (this.model.items[i].quantity !== 0) {
       this.model.items[i].quantity -= 1; // this.items[index].quantity =
       // this.items[index].quantity - 1
     } else {
@@ -87,7 +94,7 @@ export class CartPage implements OnInit {
   quantityPlus(i: number) {
     try {
       console.log(this.model.items[i]);
-      if(!this.model.items[i].quantity || this.model.items[i].quantity == 0) {
+      if (!this.model.items[i].quantity || this.model.items[i].quantity == 0) {
         this.model.items[i].quantity = 1;
         this.calculate();
       } else {
@@ -95,7 +102,7 @@ export class CartPage implements OnInit {
         // this.items[index].quantity + 1
         this.calculate();
       }
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     }
   }
@@ -109,6 +116,26 @@ export class CartPage implements OnInit {
   }
 
   makePayment() {
+    try {
+      const data = {
+        restaurant_id: this.model.restaurant.uid,
+        res: this.model.restaurant,
+        order: JSON.stringify(this.model.items),
+        time: moment().format('lll'),
+        address: this.location,
+        total: this.model.totalPrice,
+        grandTotal: this.model.grandTotal,
+        deliveryCharge: this.deliveryCharge,
+        status: "Created",
+        paid: "COD"
+      }
+      console.log('order: ', data)
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
+  scrollToBottom() {
+    this.content.scrollToBottom(500);
   }
 }
