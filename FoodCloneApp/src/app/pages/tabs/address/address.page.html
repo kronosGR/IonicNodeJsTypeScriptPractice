@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-label color="dark">
+      <ion-title>MANAGE ADDRESSES</ion-title>
+    </ion-label>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/tabs/account"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light">
+  <ion-list>
+    <ion-item-divider >SAVED ADDRESSES</ion-item-divider>
+    <ion-item-group class="ion-padding">
+      <ion-item lines="full" class="ion-no-padding">
+        <ion-icon name="home-outline" slot="start" color="medium"></ion-icon>
+        <ion-label>
+          <ion-label class="ion-padding-bottom">Address</ion-label>
+          <ion-text color="medium" class="ion-text-justify">
+            <p class="ion-text-wrap">
+              wf ewg wg wgwr greg rg eeb eg erge ge wg gerg eg er gwr g
+            </p>
+          </ion-text>
+          <ion-row>
+            <ion-button fill="clear" color="primary" (click)="editAddress()">EDIT</ion-button>
+            <ion-button fill="clear" color="primary" (click)="deleteAddress()">DELETE</ion-button>
+          </ion-row>
+        </ion-label>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="light">
+    <ion-button fill="outline" color="success" expand="block" class="ion-margin-horizontal">ADD NEW
+      ADDRESS</ion-button>
+  </ion-toolbar>
+</ion-footer>
