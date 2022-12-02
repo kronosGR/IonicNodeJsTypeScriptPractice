@@ -76,3 +76,7 @@ ion-label{
 .dashedBorderBottom {
   border-bottom: 1px dashed var(--ion-color-medium);
 }
+
+.alignedSpinner{
+  transform: translateY(40vh);
+}

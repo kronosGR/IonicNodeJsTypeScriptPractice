@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-address',
@@ -7,16 +7,58 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddressPage implements OnInit {
 
-  constructor() { }
+  isLoading: boolean = true;
+  addresses!: any[];
+
+  constructor() {
+  }
 
   ngOnInit() {
+    this.getAddresses();
   }
 
-  editAddress() {
+  editAddress(address: any) {
 
   }
 
-  deleteAddress() {
+  deleteAddress(address: any) {
 
+  }
+
+  private getAddresses() {
+    this.isLoading = true;
+    setTimeout(() => {
+      this.addresses = [
+        {
+          address: "Fancy Bazaar, India",
+          house: "2nd Floor",
+          id: "7Kox63KlggTvV7ebRKar",
+          landmark: "Fancy Bazar",
+          lat: 26.1830738,
+          lng: 91.74049769999999,
+          title: "Fancy",
+          user_id: "1"
+        },
+        {
+          address: "Kanuat palace, India",
+          house: "Ground Floor",
+          id: "8Kox63KlggTvV7ebRKar",
+          landmark: "Bazar",
+          lat: 26.1830738,
+          lng: 91.74049769999999,
+          title: "Work",
+          user_id: "1"
+        }]
+      this.isLoading = false;
+    }, 2000)
+  }
+
+  getIcon(title: String){
+    const name = title.toLowerCase();
+    switch (name) {
+      case "home": return 'home-outline';
+      case "work": return 'briefcase-outline';
+      default: return 'location-outline';
+    }
   }
 }
