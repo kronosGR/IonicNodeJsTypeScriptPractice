@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {GloablService} from "../../../services/global/gloabl.service";
 
 @Component({
   selector: 'app-address',
@@ -10,7 +11,7 @@ export class AddressPage implements OnInit {
   isLoading: boolean = true;
   addresses!: any[];
 
-  constructor() {
+  constructor(private global: GloablService) {
   }
 
   ngOnInit() {
@@ -25,7 +26,7 @@ export class AddressPage implements OnInit {
 
   }
 
-  private getAddresses() {
+  getAddresses() {
     this.isLoading = true;
     setTimeout(() => {
       this.addresses = [
@@ -53,12 +54,7 @@ export class AddressPage implements OnInit {
     }, 2000)
   }
 
-  getIcon(title: String){
-    const name = title.toLowerCase();
-    switch (name) {
-      case "home": return 'home-outline';
-      case "work": return 'briefcase-outline';
-      default: return 'location-outline';
-    }
+  getIcon(title: String) {
+    return this.global.getIcon(title);
   }
 }

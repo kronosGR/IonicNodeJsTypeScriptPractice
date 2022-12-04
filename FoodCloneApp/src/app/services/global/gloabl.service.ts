@@ -13,13 +13,17 @@ export class GloablService {
               private modalCtrl: ModalController) {
   }
 
-  async showAlert(message: any, header?: any, buttonArray?: any[]) {
-    await this.alertCtrl.create({
+  setLoader(){
+    this.isLoading = !this.isLoading;
+  }
+
+  showAlert(message: any, header?: any, buttonArray?: any[]) {
+    this.alertCtrl.create({
       header: header ? header : 'Authentication failed',
       message: message,
       buttons: buttonArray ? buttonArray : ['Okay']
     })
-      .then(alertEl => alertEl.present);
+      .then(alertEl => alertEl.present());
   }
 
   async showToast(msg: any, color: any, position: any, duration = 3000) {
@@ -35,7 +39,7 @@ export class GloablService {
     this.showToast(
       msg ? msg : 'No internet connection',
       'danger',
-      'bottopm',
+      'bottom',
       duration
     )
   }
@@ -44,12 +48,12 @@ export class GloablService {
     this.showToast(
       msg,
       'success',
-      'bottopm'
+      'bottom'
     )
   }
 
   showLoader(msg?: any, spinner?: any) {
-    this.isLoading = true;
+    if (this.isLoading) this.setLoader();
     return this.loadingCtrl.create({
       message: msg,
       spinner: spinner ? spinner : 'bubbles'
@@ -68,12 +72,35 @@ export class GloablService {
   }
 
   hideLoader() {
-    this.isLoading = false;
+    if (this.isLoading) this.setLoader();
+    // this.isLoading = false;
     return this.loadingCtrl.dismiss()
       .then(() => console.log('dismissed'))
       .catch(e => console.log('error: ', e))
   }
 
-  
+  async createModal(options: any) {
+    const modal = await this.modalCtrl.create(options);
+    await modal.present();
+    const {data} = await modal.onWillDismiss();
+    console.log(data);
+    if (data) return data;
+  }
+
+  modalDismiss(val?: any) {
+    let data: any = val ? val : null;
+    console.log('data', data);
+    this.modalCtrl.dismiss(data);
+  }
+
+  getIcon(title: String){
+    const name = title.toLowerCase();
+    switch (name) {
+      case "home": return 'home-outline';
+      case "work": return 'briefcase-outline';
+      default: return 'location-outline';
+    }
+  }
+
 
 }
