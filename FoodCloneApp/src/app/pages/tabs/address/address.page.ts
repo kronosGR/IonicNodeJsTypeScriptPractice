@@ -1,60 +1,88 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GloablService} from "../../../services/global/gloabl.service";
+import {AddressService} from "../../../services/address/address.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-address',
   templateUrl: './address.page.html',
   styleUrls: ['./address.page.scss'],
 })
-export class AddressPage implements OnInit {
+export class AddressPage implements OnInit, OnDestroy {
 
   isLoading: boolean = true;
   addresses!: any[];
+  addressesSub: Subscription | undefined;
 
-  constructor(private global: GloablService) {
+  constructor(private global: GloablService, private addressService: AddressService) {
   }
 
   ngOnInit() {
+    this.addressesSub = this.addressService.addresses.subscribe(address => {
+      if (address instanceof Array) {
+        this.addresses = address;
+      } else {
+        if (address?.delete) {
+          this.addresses = this.addresses.filter(x => x.id != address.id);
+        } else if (address?.update) {
+          const index = this.addresses.findIndex(x => x.id == address.id);
+          this.addresses[index] = address;
+        } else {
+          this.addresses = this.addresses.concat(address);
+        }
+      }
+    })
     this.getAddresses();
   }
 
-  editAddress(address: any) {
+  ngOnDestroy() {
+    if (this.addressesSub) this.addressesSub.unsubscribe();
+  }
 
+  editAddress(address: any) {
+    //this.addressService.updateAddress();
   }
 
   deleteAddress(address: any) {
-
+    console.log('address:', address);
+    this.global.showAlert(
+      'Are you sure you want to delete this address',
+      "Confirm",
+      [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            console.log('cancel');
+            return;
+          }
+        },
+        {
+          text: 'Yes',
+          handler: async () => {
+            this.global.showLoader();
+            await this.addressService.deleteAddress(address);
+            this.global.hideLoader();
+          }
+        }
+      ]
+    )
   }
 
   getAddresses() {
     this.isLoading = true;
-    setTimeout(() => {
-      this.addresses = [
-        {
-          address: "Fancy Bazaar, India",
-          house: "2nd Floor",
-          id: "7Kox63KlggTvV7ebRKar",
-          landmark: "Fancy Bazar",
-          lat: 26.1830738,
-          lng: 91.74049769999999,
-          title: "Fancy",
-          user_id: "1"
-        },
-        {
-          address: "Kanuat palace, India",
-          house: "Ground Floor",
-          id: "8Kox63KlggTvV7ebRKar",
-          landmark: "Bazar",
-          lat: 26.1830738,
-          lng: 91.74049769999999,
-          title: "Work",
-          user_id: "1"
-        }]
+    this.global.showLoader();
+    setTimeout(async () => {
+      await this.addressService.getAddresses()
       this.isLoading = false;
+      this.global.hideLoader();
     }, 2000)
   }
 
   getIcon(title: String) {
     return this.global.getIcon(title);
   }
+
 }
+
+
