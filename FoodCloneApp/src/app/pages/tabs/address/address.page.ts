@@ -13,6 +13,10 @@ export class AddressPage implements OnInit, OnDestroy {
   isLoading: boolean = true;
   addresses!: any[];
   addressesSub: Subscription | undefined;
+  model: any={
+    title: 'No Addressed added yet',
+    icon: 'location-outline'
+  }
 
   constructor(private global: GloablService, private addressService: AddressService) {
   }

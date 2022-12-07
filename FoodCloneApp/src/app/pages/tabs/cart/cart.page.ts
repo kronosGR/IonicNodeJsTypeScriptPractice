@@ -1,8 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {Preferences} from "@capacitor/preferences";
-import {IonContent} from "@ionic/angular";
+import {IonContent, NavController} from "@ionic/angular";
 import * as moment from "moment";
+import {OrderService} from "../../../services/order/order.service";
+import {GloablService} from "../../../services/global/gloabl.service";
 
 @Component({
   selector: 'app-cart',
@@ -18,7 +20,8 @@ export class CartPage implements OnInit {
   instruction: any;
   location: any = {};
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private orderService: OrderService, private global: GloablService,
+              private nacCtrl: NavController) {
   }
 
   ngOnInit() {
@@ -115,7 +118,7 @@ export class CartPage implements OnInit {
 
   }
 
-  makePayment() {
+  async makePayment() {
     try {
       const data = {
         restaurant_id: this.model.restaurant.uid,
@@ -130,6 +133,13 @@ export class CartPage implements OnInit {
         paid: "COD"
       }
       console.log('order: ', data)
+      await this.orderService.placeOrder(data);
+
+      // clear cart
+      await this.clearCart();
+
+      this.global.successToast('Your order is Places Successfully');
+      this.nacCtrl.navigateRoot(['tabs/account'])
     } catch (e) {
       console.log(e)
     }

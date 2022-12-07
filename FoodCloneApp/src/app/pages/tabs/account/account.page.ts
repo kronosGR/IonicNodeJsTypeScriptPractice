@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {OrderService} from "../../../services/order/order.service";
 
@@ -7,7 +7,7 @@ import {OrderService} from "../../../services/order/order.service";
   templateUrl: './account.page.html',
   styleUrls: ['./account.page.scss'],
 })
-export class AccountPage implements OnInit {
+export class AccountPage implements OnInit, OnDestroy {
 
   orders: any = [];
   profile: any = {}
@@ -21,9 +21,17 @@ export class AccountPage implements OnInit {
   ngOnInit() {
     this.ordersSub = this.ordersService.orders.subscribe(order => {
       console.log('order data: ', order)
-      this.orders = order;
+      if (order instanceof Array) {
+        this.orders = order;
+      }
+    }, e => {
+      console.log(e)
     })
     this.getData();
+  }
+
+  ngOnDestroy() {
+    if (this.ordersSub) this.ordersSub.unsubscribe();
   }
 
   logout() {
