@@ -5,6 +5,7 @@ import {IonContent, NavController} from "@ionic/angular";
 import * as moment from "moment";
 import {OrderService} from "../../../services/order/order.service";
 import {GloablService} from "../../../services/global/gloabl.service";
+import {CartService} from "../../../services/cart/cart.service";
 
 @Component({
   selector: 'app-cart',
@@ -20,8 +21,11 @@ export class CartPage implements OnInit {
   instruction: any;
   location: any = {};
 
-  constructor(private router: Router, private orderService: OrderService, private global: GloablService,
-              private nacCtrl: NavController) {
+  constructor(private router: Router,
+              private orderService: OrderService,
+              private global: GloablService,
+              private nacCtrl: NavController,
+              private  cartService: CartService) {
   }
 
   ngOnInit() {
@@ -46,13 +50,10 @@ export class CartPage implements OnInit {
   }
 
   async getModel() {
-    let data: any = await this.getCard();
     this.location = {
-      lat: 58.8490393, lng: 5.7480021, address: "Gravarsveien 34, 4306 Sandnes"
-    }
-    if (data?.value) {
-      this.model = await JSON.parse(data.value);
-      this.calculate();
+      lat: 58.8490393,
+      lng: 5.7480021,
+      address: "Gravarsveien 34, 4306 Sandnes"
     }
   }
 
@@ -85,29 +86,11 @@ export class CartPage implements OnInit {
   }
 
   quantityMinus(i: number) {
-    if (this.model.items[i].quantity !== 0) {
-      this.model.items[i].quantity -= 1; // this.items[index].quantity =
-      // this.items[index].quantity - 1
-    } else {
-      this.model.items[i].quantity = 0;
-    }
-    this.calculate();
+    this.cartService.quantityMinus(i);
   }
 
   quantityPlus(i: number) {
-    try {
-      console.log(this.model.items[i]);
-      if (!this.model.items[i].quantity || this.model.items[i].quantity == 0) {
-        this.model.items[i].quantity = 1;
-        this.calculate();
-      } else {
-        this.model.items[i].quantity += 1; // this.items[index].quantity =
-        // this.items[index].quantity + 1
-        this.calculate();
-      }
-    } catch (e) {
-      console.log(e);
-    }
+   this.cartService.quantityPlus(i)
   }
 
   addAddress() {
